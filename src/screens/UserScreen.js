@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import Heading from "../components/Heading";
@@ -15,7 +23,7 @@ export default function UserScreen(props) {
     if (name == "" || address == "" || age == "" || phone == "") {
       alert("value is empty");
     } else {
-      if (EditItem) {
+      if (props.route.params) {
         const userdata = { name, address, age, phone, id: EditItem.id };
         editUser(userdata);
       } else {
@@ -33,7 +41,7 @@ export default function UserScreen(props) {
 
   let EditItem = props.route.params;
   useEffect(() => {
-    if (EditItem) {
+    if (props.route.params) {
       setName(EditItem.name);
       setAddress(EditItem.address);
       setAge(EditItem.age);
@@ -44,38 +52,42 @@ export default function UserScreen(props) {
       setAge("");
       setPhone("");
     }
-  }, [EditItem]);
+  }, []);
   return (
-    <View style={styles.mainContainer}>
-      <Heading title={"Enter Details"} />
-      <View style={styles.formContainer}>
-        <InputField
-          textValue={name}
-          placeholder="Enter Name"
-          change={setName}
-        />
-        <InputField
-          textValue={address}
-          placeholder="Enter Address"
-          change={setAddress}
-        />
-        <InputField
-          textValue={age}
-          placeholder="Enter Age"
-          change={setAge}
-          type={"numeric"}
-        />
-        <InputField
-          textValue={phone}
-          placeholder="Enter Phone"
-          change={setPhone}
-          type={"numeric"}
-        />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.mainContainer}>
+        <Heading title={"Enter Details"} />
+        <View style={styles.formContainer}>
+          <InputField
+            textValue={name}
+            placeholder="Enter Name"
+            change={setName}
+          />
+          <InputField
+            textValue={address}
+            placeholder="Enter Address"
+            change={setAddress}
+          />
+          <InputField
+            textValue={age}
+            placeholder="Enter Age"
+            change={setAge}
+            type={"numeric"}
+          />
+          <InputField
+            textValue={phone}
+            placeholder="Enter Phone"
+            change={setPhone}
+            type={"numeric"}
+          />
+        </View>
+        <TouchableOpacity style={styles.btnstyle} on onPress={Submit}>
+          <Text style={styles.btnTxtstyle}>
+            {props.route.params ? "Update" : "Submit"}
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.btnstyle} on onPress={Submit}>
-        <Text style={styles.btnTxtstyle}>{EditItem ? "Update" : "Submit"}</Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

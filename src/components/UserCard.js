@@ -3,13 +3,13 @@ import React from "react";
 import { moderateScale } from "react-native-size-matters";
 import { deleteExisting } from "../redux/Actions/Action";
 
-export default function UserCard({ item, setEditItem }) {
+export default function UserCard({ item, navigation }) {
   const handleDeleteBtn = (id) => {
     deleteExisting(id);
   };
 
   const handleEditBtn = (item) => {
-    setEditItem(item);
+    navigation.navigate("UserScreen", item);
   };
 
   return (

@@ -1,4 +1,9 @@
-import { DeleteUser, EditUser, addUser } from "../Reducers/MainReducer";
+import {
+  DeleteUser,
+  EditUser,
+  addFromStorage,
+  addUser,
+} from "../Reducers/MainReducer";
 import Store from "../Store";
 
 export function addNewUser(userdata) {
@@ -11,4 +16,8 @@ export function deleteExisting(id) {
 
 export function editUser(item) {
   Store.dispatch(EditUser(item));
+}
+
+export function AccessLocalStorage(data) {
+  Store.dispatch(addFromStorage(data));
 }

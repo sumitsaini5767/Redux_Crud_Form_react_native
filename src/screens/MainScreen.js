@@ -13,11 +13,6 @@ import { useSelector } from "react-redux";
 
 export default function MainScreen(props) {
   const data = useSelector((state) => state.data);
-  const [EditItem, setEditItem] = useState(null);
-
-  useEffect(() => {
-    props.navigation.navigate("UserScreen", EditItem);
-  }, [EditItem]);
 
   return (
     <View style={styles.mainContainer}>
@@ -26,7 +21,7 @@ export default function MainScreen(props) {
         style={styles.flatlistContainer}
         data={data}
         renderItem={({ item }) => (
-          <UserCard item={item} setEditItem={setEditItem} />
+          <UserCard item={item} navigation={props.navigation} />
         )}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => (
@@ -36,7 +31,7 @@ export default function MainScreen(props) {
 
       <TouchableOpacity
         style={styles.AddUserBtn}
-        onPress={() => props.navigation.navigate("UserScreen", { id: "none" })}
+        onPress={() => props.navigation.navigate("UserScreen")}
       >
         <Text style={styles.AddBtnTxt}>+</Text>
       </TouchableOpacity>
